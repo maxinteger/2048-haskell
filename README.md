@@ -5,5 +5,5 @@
 
 - Install GHCi
 - Run: `runhaskell 2048.hs`
-- Use <kbd>A</kbd> <kbd>W</kbd> <kbd>S</kbd> <kbd>D</kbd> + <kbd>Enter<kbd> for play
+- Use <kbd>A</kbd> <kbd>W</kbd> <kbd>S</kbd> <kbd>D</kbd> + <kbd>Enter</kbd> for play
 - Enjoy
