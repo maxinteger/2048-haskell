@@ -3,7 +3,7 @@
 
 # Install and run
 
-- Install GHCi
+- Install GHCi and ansi-terminal with `cabal install ansi-terminal`
 - Run: `runhaskell 2048.hs`
-- Use <kbd>A</kbd> <kbd>W</kbd> <kbd>S</kbd> <kbd>D</kbd> + <kbd>Enter</kbd> for play
+- Use <kbd>A</kbd> <kbd>W</kbd> <kbd>S</kbd> <kbd>D</kbd> for play (exit with <kbd>Ctrl+C</kbd>)
 - Enjoy

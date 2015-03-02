@@ -1,13 +1,15 @@
 module Game2048 where
 
+import System.Console.ANSI
 import System.Random
+import System.IO
 import Control.Monad
 import Data.List
 
 type GameCell = Int
 type GameRow = [GameCell]
 type GameTable = [GameRow]
-data GameData = GameData { table :: GameTable, scote :: Int } deriving (Show, Eq)
+data GameData = GameData GameTable Int deriving (Show, Eq)
 
 size = 4
 initTable = replicate size (replicate size 0)
@@ -32,7 +34,7 @@ move 'w' t = transpose $ pullTable $ transpose t
 move 'a' t = pullTable t
 move 's' t = map reverse $ transpose (pullTable (transpose $ map reverse t))
 move 'd' t = map reverse (pullTable (map reverse t))
-
+move _   t = t
 
 countEmptyCells :: GameTable -> Int
 countEmptyCells tbl = length [y | x <- tbl, y <- x, y == 0]
@@ -42,13 +44,17 @@ checkEOG :: GameTable -> Bool
 checkEOG tbl = countEmptyCells tbl > 0
 
 
+checkWin :: GameTable -> Bool
+checkWin tbl = countEmptyCells tbl > 0
+
+
 pad :: Int -> String -> String
 pad len str = take len (str ++ [' ',' ' ..])
 
 
 getValidChar :: [Char] -> IO Char
 getValidChar chars = do
-    c <- getChar
+    c <- hGetChar stdin
     if (c `elem` chars) then return c else getValidChar chars
 
 
@@ -77,6 +83,7 @@ addNextRndCell tbl = do
 game :: GameData -> IO()
 game (GameData table score) = do
     --sequence (map (putStrLn . show) tbl)
+    clearScreen
     putStrLn $ concat $  map (foldr (\x a -> (pad 5 (show x)) ++ a) "\n") table
     dir <- getValidChar ['a', 'w', 's', 'd']
 
@@ -90,5 +97,8 @@ game (GameData table score) = do
 
 main :: IO()
 main = do
+    hSetEcho stdin False
+    hSetBuffering stdin NoBuffering
+    hSetBuffering stdout NoBuffering
     iTbl <- addNextRndCell initTable
     game (GameData iTbl 0)
