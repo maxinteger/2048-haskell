@@ -21,7 +21,7 @@ pullRow [x]     = [x]
 pullRow (x:y:xs)
     | y == 0    = pullRow (x:xs) ++ [0]
     | x == 0    = pullRow (y:x:xs)
-    | x == y    = pullRow (x+y:xs) ++ [0]
+    | x == y    = [x+y] ++ pullRow (xs) ++ [0]
     | otherwise = x : pullRow (y:xs)
 
 
